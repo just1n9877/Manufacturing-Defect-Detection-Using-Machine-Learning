@@ -41,6 +41,17 @@ python scripts/prepare_dataset.py --dataset-dir "C:\Users\18747\Desktop\NEU surf
 
 Default split is 70% train, 15% validation, 15% test.
 
+Note: `data/splits.csv` should be regenerated on each machine because image paths depend on the local dataset location. The split file is ignored by Git; keep only `data/README.md` in the repository.
+
+## Reproducibility Settings
+
+- Random seed: 42
+- Image size: 200x200
+- Split: 70% train, 15% validation, 15% test
+- HOG + SVM: HOG features with LinearSVC and balanced class weights
+- ResNet18: ImageNet pretrained weights, AdamW optimizer, learning rate 3e-4, batch size 32, epochs 15
+- Model selection: best validation accuracy
+
 ## Train Baseline
 
 ```powershell
@@ -58,6 +69,12 @@ Outputs:
 
 ```powershell
 python scripts/train_resnet18.py --splits data/splits.csv --epochs 15 --batch-size 32
+```
+
+To save the full training log:
+
+```powershell
+python scripts/train_resnet18.py --splits data/splits.csv --epochs 15 --batch-size 32 *> reports/training_log_resnet18.txt
 ```
 
 The first pretrained run may download ImageNet weights. If the machine has no network access, use:
