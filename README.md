@@ -78,9 +78,9 @@ Outputs:
 Test set size: 270 images, with 45 images per class.
 
 | Model | Accuracy | Macro Precision | Macro Recall |
-| --- | ---: | ---: | ---: |
+|---|---:|---:|---:|
 | HOG + SVM | 61.48% | 60.98% | 61.48% |
-| ResNet18 transfer learning | 99.63% | 99.64% | 99.63% |
+| ResNet18 Transfer Learning | 99.63% | 99.64% | 99.63% |
 
 The ResNet18 transfer-learning model improved test accuracy from 61.48% to 99.63% compared with the HOG + SVM baseline.
 
@@ -100,7 +100,7 @@ Result artifacts committed under `reports/`:
 
 Based on the HOG + SVM confusion matrix, the baseline performed weakly on `Pa`/Patches and `PS`/Pitted surface. The largest confusion pairs were `Pa -> Cr` with 12 samples, `PS -> Cr` with 11 samples, and `PS -> In` with 8 samples. This is consistent with HOG relying on local edge and gradient patterns instead of higher-level defect texture.
 
-ResNet18 made only one mistake on the 270-image test set: `In_240.bmp`, true class `In`/Inclusion, predicted as `PS`/Pitted surface. A likely reason is that both classes can contain small dark local defect patterns.
+Based on the ResNet18 confusion matrix, the model made one test-set error: `In_240.bmp`, true class `In`/Inclusion, predicted as `PS`/Pitted surface. A likely reason is that both classes contain small dark local defect patterns, and the difference may depend on local density and distribution.
 
 See `reports/error_analysis.md` for the detailed analysis.
 

@@ -5,9 +5,9 @@ Dataset: NEU steel surface defect classification.
 Split: 70% train, 15% validation, 15% test. The test set contains 270 images, with 45 images per class.
 
 | Model | Accuracy | Macro Precision | Macro Recall |
-| --- | ---: | ---: | ---: |
+|---|---:|---:|---:|
 | HOG + SVM | 61.48% | 60.98% | 61.48% |
-| ResNet18 transfer learning | 99.63% | 99.64% | 99.63% |
+| ResNet18 Transfer Learning | 99.63% | 99.64% | 99.63% |
 
 ## Evidence Files
 

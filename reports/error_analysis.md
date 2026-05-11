@@ -8,7 +8,7 @@ The test set contains 270 images, with 45 images per class.
 
 ### HOG + SVM
 
-HOG + SVM reached 61.48% accuracy, 60.98% macro precision, and 61.48% macro recall. Its weakest classes were `Pa`/Patches and `PS`/Pitted surface:
+Based on the HOG + SVM confusion matrix, the baseline struggled mainly with texture-similar classes such as `Pa`/Patches and `PS`/Pitted surface. HOG + SVM reached 61.48% accuracy, 60.98% macro precision, and 61.48% macro recall.
 
 - `Pa` recall: 18/45. The largest error was `Pa -> Cr` with 12 samples.
 - `PS` recall: 15/45. The largest errors were `PS -> Cr` with 11 samples, `PS -> In` with 8 samples, and `PS -> Pa` with 7 samples.
@@ -18,14 +18,14 @@ This pattern is expected for a HOG baseline. HOG captures local edge orientation
 
 ### ResNet18
 
-ResNet18 transfer learning reached 99.63% accuracy, 99.64% macro precision, and 99.63% macro recall. It made one mistake:
+ResNet18 Transfer Learning reached 99.63% accuracy, 99.64% macro precision, and 99.63% macro recall. Based on the ResNet18 confusion matrix, the model made one test-set error:
 
 - Image: `In_240.bmp`
 - True class: `In`/Inclusion
 - Predicted class: `PS`/Pitted surface
 - Saved preview: `reports/misclassified_samples/resnet18_001_true_In_pred_PS.png`
 
-The likely reason is that inclusion and pitted surface samples can both contain small, dark, local defect patterns. ResNet18 learned the broader texture differences well enough that this ambiguity appeared only once on the test set.
+The likely reason is that inclusion and pitted surface samples can both contain small, dark, local defect patterns, and the difference may depend on local density and distribution. ResNet18 learned the broader texture differences well enough that this ambiguity appeared only once on the test set.
 
 ## Why ResNet18 Improved the Baseline
 
