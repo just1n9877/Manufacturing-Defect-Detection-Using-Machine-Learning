@@ -84,29 +84,40 @@ Test set size: 270 images, with 45 images per class.
 
 The ResNet18 transfer-learning model improved test accuracy from 61.48% to 99.63% compared with the HOG + SVM baseline.
 
-## Resume Bullets
+Result artifacts committed under `reports/`:
 
-- Built a steel surface defect classifier on the NEU dataset covering six industrial defect categories.
-- Implemented an OpenCV preprocessing and augmentation pipeline, plus a HOG + SVM baseline for interpretable classical CV comparison.
-- Fine-tuned a ResNet18 transfer-learning model in PyTorch and evaluated accuracy, macro precision/recall, and confusion matrices.
-- Analyzed class-level misclassification patterns and proposed production controls to reduce false negatives.
+- `reports/metrics_hog_svm.json`
+- `reports/metrics_resnet18.json`
+- `reports/classification_report_hog_svm.txt`
+- `reports/classification_report_resnet18.txt`
+- `reports/confusion_hog_svm.json`
+- `reports/confusion_resnet18.json`
+- `reports/figures/hog_svm_confusion_matrix.png`
+- `reports/figures/resnet18_confusion_matrix.png`
+- `reports/misclassified_samples/resnet18_001_true_In_pred_PS.png`
 
-中文简历版本：
+## Error Analysis
 
-- 基于 NEU 钢材表面缺陷数据集完成 6 类缺陷分类，覆盖 crazing、inclusion、patches、pitted surface、rolled-in scale、scratches。
-- 使用 OpenCV 实现灰度化、resize 和训练集数据增强，构建 HOG + SVM 传统视觉 baseline。
-- 使用 PyTorch fine-tune ResNet18 迁移学习模型，并输出 accuracy、macro precision、macro recall 和 confusion matrix。
-- 基于混淆矩阵分析易混类别，并提出真实产线中降低 false negative 的策略。
+Based on the HOG + SVM confusion matrix, the baseline performed weakly on `Pa`/Patches and `PS`/Pitted surface. The largest confusion pairs were `Pa -> Cr` with 12 samples, `PS -> Cr` with 11 samples, and `PS -> In` with 8 samples. This is consistent with HOG relying on local edge and gradient patterns instead of higher-level defect texture.
 
-## Error Analysis Guide
+ResNet18 made only one mistake on the 270-image test set: `In_240.bmp`, true class `In`/Inclusion, predicted as `PS`/Pitted surface. A likely reason is that both classes can contain small dark local defect patterns.
 
-After training, inspect `outputs/*/classification_report.txt` and `outputs/*/confusion_matrix.png`.
+See `reports/error_analysis.md` for the detailed analysis.
 
-Typical NEU confusion patterns to check:
+## Production-Oriented Inspection Workflow
 
-- In this experiment, HOG + SVM performed weakly on `Pa`/Patches and `PS`/Pitted surface, while ResNet18 made only very few mistakes, mainly likely between small dark-spot defects such as `In`/Inclusion and `PS`/Pitted surface.
-- `RS` vs `Pa`: both can form broad texture regions; boundaries may be weak after grayscale resize.
-- `Cr` vs `Sc`: both have thin line-like structures; cracks are often irregular, scratches more directional.
-- `In` vs `PS`: both can appear as small dark local defects; scale and density matter.
+1. Camera captures the steel surface image.
+2. Preprocessing normalizes size, grayscale format, and contrast.
+3. The CNN classifier predicts defect class and confidence score.
+4. Low-confidence or high-risk predictions enter manual review.
+5. Per-class recall and false negative rate are monitored weekly.
+6. Misclassified and borderline samples are added to the retraining set.
+
+## Limitations
+
+- The NEU dataset is relatively small and clean compared with real production images.
+- The test set contains 270 images, so 99.63% accuracy corresponds to one misclassified image.
+- Real production deployment would require validation on recent line images, camera and lighting drift checks, and a recall-oriented threshold.
+- This project is a classification prototype, not a full production inspection system.
 
 In a real production line, reducing false negatives matters more than maximizing overall accuracy. Practical measures include using a defect/non-defect threshold tuned for high recall, reviewing low-confidence predictions, collecting more hard negative and borderline defect samples, monitoring per-class recall, and adding lighting/camera checks so missed defects are not caused by image acquisition drift.

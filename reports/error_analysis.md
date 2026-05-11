@@ -1,30 +1,39 @@
 # Error Analysis and Production Notes
 
-This report should be updated after running both models and inspecting:
+This report summarizes the completed HOG + SVM and ResNet18 experiments on the NEU steel surface defect test split.
 
-- `outputs/hog_svm/confusion_matrix.png`
-- `outputs/resnet18/confusion_matrix.png`
-- `outputs/*/classification_report.txt`
+## Observed Misclassification Patterns
 
-## Likely Confusions to Check
+The test set contains 270 images, with 45 images per class.
 
-`Cr` vs `Sc`: crazing and scratches both produce thin, high-contrast line patterns. HOG may confuse them because both classes have strong local edge responses. A CNN should improve this by learning whether the line pattern is irregular and network-like (`Cr`) or more directional and isolated (`Sc`).
+### HOG + SVM
 
-`RS` vs `Pa`: rolled-in scale and patches can both appear as wider textured regions. If the defect boundary is weak after resizing, the classifier may rely on local texture density instead of global shape.
+HOG + SVM reached 61.48% accuracy, 60.98% macro precision, and 61.48% macro recall. Its weakest classes were `Pa`/Patches and `PS`/Pitted surface:
 
-`In` vs `PS`: inclusion and pitted surface defects can both appear as small dark spots. The difference is often in spot density, depth impression, and distribution, which can be weakened by grayscale normalization.
+- `Pa` recall: 18/45. The largest error was `Pa -> Cr` with 12 samples.
+- `PS` recall: 15/45. The largest errors were `PS -> Cr` with 11 samples, `PS -> In` with 8 samples, and `PS -> Pa` with 7 samples.
+- `RS` was easiest for the baseline, with 45/45 correct predictions.
 
-## Why HOG + SVM May Fail
+This pattern is expected for a HOG baseline. HOG captures local edge orientation and gradient histograms, but it does not learn higher-level surface texture. Broad patch-like defects, pitted regions, and crack-like structures can share similar local gradients after grayscale resizing.
 
-HOG captures edge orientation and local gradient histograms. It is useful as a baseline, but it does not learn higher-level context. It is expected to struggle when two defect classes have similar edge direction, scale, or contrast.
+### ResNet18
 
-## Why ResNet18 Should Help
+ResNet18 transfer learning reached 99.63% accuracy, 99.64% macro precision, and 99.63% macro recall. It made one mistake:
 
-ResNet18 can learn multi-scale texture and shape cues after transfer learning. It can combine local edge information with wider spatial context, which is important for separating scratches, crazing, pitted surfaces, and broad patches.
+- Image: `In_240.bmp`
+- True class: `In`/Inclusion
+- Predicted class: `PS`/Pitted surface
+- Saved preview: `reports/misclassified_samples/resnet18_001_true_In_pred_PS.png`
+
+The likely reason is that inclusion and pitted surface samples can both contain small, dark, local defect patterns. ResNet18 learned the broader texture differences well enough that this ambiguity appeared only once on the test set.
+
+## Why ResNet18 Improved the Baseline
+
+ResNet18 can combine local edges with wider spatial context and multi-scale texture cues. That matters for separating patches, pitted surfaces, inclusions, scratches, and crazing, where local gradient features alone are not always distinctive.
 
 ## Reducing False Negatives in Production
 
-False negatives are missed defects, so the production goal should prioritize recall over raw accuracy.
+False negatives are missed defects, so a production system should prioritize recall over raw accuracy.
 
 Recommended controls:
 
@@ -34,5 +43,5 @@ Recommended controls:
 - Collect more borderline and hard-negative samples from the real line.
 - Use active learning: send uncertain or frequently confused samples to human review, then retrain.
 - Calibrate cameras, lighting, exposure, and surface cleaning so acquisition drift does not hide defects.
-- Consider a two-stage system: first defect detection/segmentation, then defect classification.
+- Consider a two-stage system: first defect detection or segmentation, then defect classification.
 - Add periodic validation on recent production images to catch distribution shift early.

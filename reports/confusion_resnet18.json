@@ -1,0 +1,78 @@
+{
+  "labels": [
+    "Cr",
+    "In",
+    "Pa",
+    "PS",
+    "RS",
+    "Sc"
+  ],
+  "label_names": {
+    "Cr": "Crazing",
+    "In": "Inclusion",
+    "Pa": "Patches",
+    "PS": "Pitted surface",
+    "RS": "Rolled-in scale",
+    "Sc": "Scratches"
+  },
+  "matrix": [
+    [
+      45,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      44,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      45,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      45,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      45,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      45
+    ]
+  ],
+  "misclassified_count": 1,
+  "misclassified_samples": [
+    {
+      "index": 172,
+      "image_path": "C:\\Users\\18747\\Desktop\\NEU surface defect database\\In_240.bmp",
+      "true": "In",
+      "predicted": "PS",
+      "saved_preview": "reports\\misclassified_samples\\resnet18_001_true_In_pred_PS.png"
+    }
+  ]
+}

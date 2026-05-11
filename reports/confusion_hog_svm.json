@@ -1,0 +1,180 @@
+{
+  "labels": [
+    "Cr",
+    "In",
+    "Pa",
+    "PS",
+    "RS",
+    "Sc"
+  ],
+  "label_names": {
+    "Cr": "Crazing",
+    "In": "Inclusion",
+    "Pa": "Patches",
+    "PS": "Pitted surface",
+    "RS": "Rolled-in scale",
+    "Sc": "Scratches"
+  },
+  "matrix": [
+    [
+      30,
+      0,
+      8,
+      3,
+      4,
+      0
+    ],
+    [
+      4,
+      31,
+      3,
+      4,
+      1,
+      2
+    ],
+    [
+      12,
+      6,
+      18,
+      5,
+      0,
+      4
+    ],
+    [
+      11,
+      8,
+      7,
+      15,
+      1,
+      3
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      45,
+      0
+    ],
+    [
+      2,
+      8,
+      4,
+      3,
+      1,
+      27
+    ]
+  ],
+  "top_confusions": [
+    {
+      "true": "Pa",
+      "predicted": "Cr",
+      "count": 12
+    },
+    {
+      "true": "PS",
+      "predicted": "Cr",
+      "count": 11
+    },
+    {
+      "true": "Cr",
+      "predicted": "Pa",
+      "count": 8
+    },
+    {
+      "true": "PS",
+      "predicted": "In",
+      "count": 8
+    },
+    {
+      "true": "Sc",
+      "predicted": "In",
+      "count": 8
+    },
+    {
+      "true": "PS",
+      "predicted": "Pa",
+      "count": 7
+    },
+    {
+      "true": "Pa",
+      "predicted": "In",
+      "count": 6
+    },
+    {
+      "true": "Pa",
+      "predicted": "PS",
+      "count": 5
+    },
+    {
+      "true": "Cr",
+      "predicted": "RS",
+      "count": 4
+    },
+    {
+      "true": "In",
+      "predicted": "Cr",
+      "count": 4
+    },
+    {
+      "true": "In",
+      "predicted": "PS",
+      "count": 4
+    },
+    {
+      "true": "Pa",
+      "predicted": "Sc",
+      "count": 4
+    },
+    {
+      "true": "Sc",
+      "predicted": "Pa",
+      "count": 4
+    },
+    {
+      "true": "Cr",
+      "predicted": "PS",
+      "count": 3
+    },
+    {
+      "true": "In",
+      "predicted": "Pa",
+      "count": 3
+    },
+    {
+      "true": "PS",
+      "predicted": "Sc",
+      "count": 3
+    },
+    {
+      "true": "Sc",
+      "predicted": "PS",
+      "count": 3
+    },
+    {
+      "true": "In",
+      "predicted": "Sc",
+      "count": 2
+    },
+    {
+      "true": "Sc",
+      "predicted": "Cr",
+      "count": 2
+    },
+    {
+      "true": "In",
+      "predicted": "RS",
+      "count": 1
+    },
+    {
+      "true": "PS",
+      "predicted": "RS",
+      "count": 1
+    },
+    {
+      "true": "Sc",
+      "predicted": "RS",
+      "count": 1
+    }
+  ]
+}

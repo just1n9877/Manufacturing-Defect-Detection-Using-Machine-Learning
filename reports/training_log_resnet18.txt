@@ -1,0 +1,16 @@
+Command:
+python scripts/train_resnet18.py --splits data/splits.csv --epochs 15 --batch-size 32
+
+Final test metrics:
+accuracy: 0.9962962962962963
+macro_precision: 0.9963768115942028
+macro_recall: 0.9962962962962963
+
+Final test classification summary:
+- Test images: 270
+- Correct predictions: 269
+- Misclassified predictions: 1
+- Misclassified sample: In_240.bmp, true=In, predicted=PS
+
+Notes:
+The original console epoch log was not captured to a file during training. The committed report artifacts were exported from the saved model checkpoint and test split after training.
