@@ -2,6 +2,10 @@
 
 NEU steel surface defect classification project for a resume-ready portfolio. It includes a classical computer vision baseline and a transfer-learning CNN.
 
+## Apple MDE Relevance
+
+Apple MDE teams need reliable inspection signals to catch surface defects before they become yield loss, rework, or customer-facing quality escapes. This project shows how a manufacturing defect classifier can compare a classical vision baseline against a ResNet18 transfer-learning model, then use confusion matrices and misclassified samples to understand inspection risk.
+
 ## Task
 
 Classify six steel surface defects from the NEU dataset:
