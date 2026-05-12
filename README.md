@@ -6,6 +6,21 @@ NEU steel surface defect classification project for a resume-ready portfolio. It
 
 Apple MDE teams need reliable inspection signals to catch surface defects before they become yield loss, rework, or customer-facing quality escapes. This project shows how a manufacturing defect classifier can compare a classical vision baseline against a ResNet18 transfer-learning model, then use confusion matrices and misclassified samples to understand inspection risk.
 
+## Key Results
+
+| Model | Accuracy | Macro Precision | Macro Recall |
+|---|---:|---:|---:|
+| HOG + SVM Baseline | 61.48% | 60.98% | 61.48% |
+| ResNet18 Transfer Learning | 99.63% | 99.64% | 99.63% |
+
+The ResNet18 model misclassified only 1 sample out of 270 test images. The misclassified sample was an Inclusion defect predicted as Pitted Surface, which was further analyzed from a manufacturing false-negative risk perspective.
+
+## Confusion Matrix Preview
+
+![ResNet18 Confusion Matrix](reports/figures/resnet18_confusion_matrix.png)
+
+![HOG + SVM Confusion Matrix](reports/figures/hog_svm_confusion_matrix.png)
+
 ## Task
 
 Classify six steel surface defects from the NEU dataset:
